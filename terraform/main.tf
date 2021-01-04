@@ -28,7 +28,7 @@ resource "google_compute_firewall" "allow-all-internal" {
   source_ranges = ["10.0.1.0/28"]
 }
 
-resource "google_compute_firewall" "allow-all-internal" {
+resource "google_compute_firewall" "allow-ssh" {
   name    = "allow-ssh"
   network = google_compute_network.project-network.id
   allow {
