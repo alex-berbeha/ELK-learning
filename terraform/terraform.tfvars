@@ -1,1 +1,2 @@
-vpc_name                = "elk"
+vpc_name    = "elk"
+subnet_name = "elastic"
