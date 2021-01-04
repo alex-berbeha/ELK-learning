@@ -12,13 +12,15 @@ resource "google_compute_subnetwork" "project-subnet" {
 }
 
 resource "google_compute_firewall" "allow-all-internal" {
-  name = "allow-all-internal"
+  name    = "allow-all-internal"
   network = google_compute_network.project-network.id
   allow {
     protocol = "tcp"
+    ports    = ["0-65535"]
   }
   allow {
     protocol = "udp"
+    ports    = ["0-65535"]
   }
   allow {
     protocol = "icmp"
@@ -26,7 +28,13 @@ resource "google_compute_firewall" "allow-all-internal" {
   source_ranges = ["10.0.1.0/28"]
 }
 
+resource "google_compute_firewall" "allow-all-internal" {
+  name    = "allow-ssh"
+  network = google_compute_network.project-network.id
+  allow {
+    protocol = "tcp"
+    ports    = [22]
+  }
 
-
-
-
+  source_ranges = ["0.0.0.0/0"]
+}
