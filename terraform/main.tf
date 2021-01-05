@@ -8,7 +8,7 @@ resource "google_compute_subnetwork" "project-subnet" {
   ip_cidr_range            = "10.0.1.0/28"
   private_ip_google_access = "true"
   network                  = google_compute_network.project-network.id
-  region                   = "  "
+  region                   = "europe-north1"
 }
 
 resource "google_compute_firewall" "allow-all-internal" {
