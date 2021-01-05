@@ -92,3 +92,26 @@ resource "google_compute_instance" "elastic-search" {
     }
   }
 }
+
+resource "google_compute_instance" "kibana-instance" {
+  name         = "kibana-instance"
+  machine_type = "e2-medium"
+  zone         = "europe-north1-a"
+
+  tags = ["kibana"]
+
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size  = 100
+    }
+  }
+
+  network_interface {
+    network    = google_compute_network.project-network.id
+    subnetwork = google_compute_subnetwork.project-subnet.id
+
+    access_config {
+    }
+  }
+}
