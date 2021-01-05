@@ -8,7 +8,7 @@ resource "google_compute_subnetwork" "project-subnet" {
   ip_cidr_range            = "10.0.1.0/28"
   private_ip_google_access = "true"
   network                  = google_compute_network.project-network.id
-  region                   = "europe-north1"
+  region                   = "  "
 }
 
 resource "google_compute_firewall" "allow-all-internal" {
@@ -68,4 +68,27 @@ resource "google_compute_firewall" "allow-kibana" {
 
   target_tags   = ["kibana"]
   source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_instance" "elastic-search" {
+  name         = "elastic-search-instance"
+  machine_type = "e2-medium"
+  zone         = "europe-north1-a"
+
+  tags = ["elasticsearch"]
+
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      size  = 100
+    }
+  }
+
+  network_interface {
+    network    = google_compute_network.project-network.id
+    subnetwork = google_compute_subnetwork.project-subnet.id
+
+    access_config {
+    }
+  }
 }
